@@ -32,14 +32,17 @@
             this.lbl_Descricao = new System.Windows.Forms.Label();
             this.lbl_DataCadastro = new System.Windows.Forms.Label();
             this.lbl_Situacao = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.txt_DataCadastro = new System.Windows.Forms.TextBox();
+            this.cb_Situacao = new System.Windows.Forms.ComboBox();
             this.btn_Salvar = new System.Windows.Forms.Button();
             this.btn_Excluir = new System.Windows.Forms.Button();
             this.btn_Voltar = new System.Windows.Forms.Button();
             this.lbl_Nome = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.txt_Nome = new System.Windows.Forms.TextBox();
+            this.cb_Curso = new System.Windows.Forms.ComboBox();
+            this.lbl_MateriaExcluir = new System.Windows.Forms.Label();
+            this.txt_MateriaExcluir = new System.Windows.Forms.TextBox();
+            this.lbl_ExcluirMateria = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_CadastroMateria
@@ -83,51 +86,54 @@
             this.lbl_Situacao.TabIndex = 3;
             this.lbl_Situacao.Text = "Situação:";
             // 
-            // textBox2
+            // txt_DataCadastro
             // 
-            this.textBox2.Location = new System.Drawing.Point(196, 169);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(192, 23);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.txt_DataCadastro.Location = new System.Drawing.Point(196, 169);
+            this.txt_DataCadastro.Name = "txt_DataCadastro";
+            this.txt_DataCadastro.Size = new System.Drawing.Size(192, 23);
+            this.txt_DataCadastro.TabIndex = 4;
+            this.txt_DataCadastro.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // comboBox1
+            // cb_Situacao
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cb_Situacao.FormattingEnabled = true;
+            this.cb_Situacao.Items.AddRange(new object[] {
             "Ativo",
             "Inativo"});
-            this.comboBox1.Location = new System.Drawing.Point(196, 206);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 23);
-            this.comboBox1.TabIndex = 5;
+            this.cb_Situacao.Location = new System.Drawing.Point(196, 206);
+            this.cb_Situacao.Name = "cb_Situacao";
+            this.cb_Situacao.Size = new System.Drawing.Size(121, 23);
+            this.cb_Situacao.TabIndex = 5;
             // 
             // btn_Salvar
             // 
-            this.btn_Salvar.Location = new System.Drawing.Point(151, 268);
+            this.btn_Salvar.Location = new System.Drawing.Point(366, 206);
             this.btn_Salvar.Name = "btn_Salvar";
             this.btn_Salvar.Size = new System.Drawing.Size(75, 23);
             this.btn_Salvar.TabIndex = 6;
             this.btn_Salvar.Text = "Salvar";
             this.btn_Salvar.UseVisualStyleBackColor = true;
+            this.btn_Salvar.Click += new System.EventHandler(this.btn_Salvar_Click);
             // 
             // btn_Excluir
             // 
-            this.btn_Excluir.Location = new System.Drawing.Point(274, 268);
+            this.btn_Excluir.Location = new System.Drawing.Point(167, 391);
             this.btn_Excluir.Name = "btn_Excluir";
             this.btn_Excluir.Size = new System.Drawing.Size(75, 23);
             this.btn_Excluir.TabIndex = 6;
             this.btn_Excluir.Text = "Excluir";
             this.btn_Excluir.UseVisualStyleBackColor = true;
+            this.btn_Excluir.Click += new System.EventHandler(this.btn_Excluir_Click);
             // 
             // btn_Voltar
             // 
-            this.btn_Voltar.Location = new System.Drawing.Point(390, 268);
+            this.btn_Voltar.Location = new System.Drawing.Point(354, 391);
             this.btn_Voltar.Name = "btn_Voltar";
             this.btn_Voltar.Size = new System.Drawing.Size(75, 23);
             this.btn_Voltar.TabIndex = 6;
             this.btn_Voltar.Text = "Voltar";
             this.btn_Voltar.UseVisualStyleBackColor = true;
+            this.btn_Voltar.Click += new System.EventHandler(this.btn_Voltar_Click);
             // 
             // lbl_Nome
             // 
@@ -139,34 +145,65 @@
             this.lbl_Nome.TabIndex = 7;
             this.lbl_Nome.Text = "Nome:";
             // 
-            // textBox3
+            // txt_Nome
             // 
-            this.textBox3.Location = new System.Drawing.Point(196, 95);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(197, 23);
-            this.textBox3.TabIndex = 8;
+            this.txt_Nome.Location = new System.Drawing.Point(196, 95);
+            this.txt_Nome.Name = "txt_Nome";
+            this.txt_Nome.Size = new System.Drawing.Size(197, 23);
+            this.txt_Nome.TabIndex = 8;
             // 
-            // comboBox2
+            // cb_Curso
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(196, 132);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 23);
-            this.comboBox2.TabIndex = 5;
+            this.cb_Curso.FormattingEnabled = true;
+            this.cb_Curso.Location = new System.Drawing.Point(196, 132);
+            this.cb_Curso.Name = "cb_Curso";
+            this.cb_Curso.Size = new System.Drawing.Size(121, 23);
+            this.cb_Curso.TabIndex = 5;
+            // 
+            // lbl_MateriaExcluir
+            // 
+            this.lbl_MateriaExcluir.AutoSize = true;
+            this.lbl_MateriaExcluir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_MateriaExcluir.Location = new System.Drawing.Point(79, 338);
+            this.lbl_MateriaExcluir.Name = "lbl_MateriaExcluir";
+            this.lbl_MateriaExcluir.Size = new System.Drawing.Size(52, 16);
+            this.lbl_MateriaExcluir.TabIndex = 7;
+            this.lbl_MateriaExcluir.Text = "Nome:";
+            // 
+            // txt_MateriaExcluir
+            // 
+            this.txt_MateriaExcluir.Location = new System.Drawing.Point(196, 331);
+            this.txt_MateriaExcluir.Name = "txt_MateriaExcluir";
+            this.txt_MateriaExcluir.Size = new System.Drawing.Size(197, 23);
+            this.txt_MateriaExcluir.TabIndex = 8;
+            // 
+            // lbl_ExcluirMateria
+            // 
+            this.lbl_ExcluirMateria.AutoSize = true;
+            this.lbl_ExcluirMateria.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_ExcluirMateria.ForeColor = System.Drawing.Color.Blue;
+            this.lbl_ExcluirMateria.Location = new System.Drawing.Point(167, 281);
+            this.lbl_ExcluirMateria.Name = "lbl_ExcluirMateria";
+            this.lbl_ExcluirMateria.Size = new System.Drawing.Size(91, 25);
+            this.lbl_ExcluirMateria.TabIndex = 0;
+            this.lbl_ExcluirMateria.Text = "Excluir:";
             // 
             // CadastroMateria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 348);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.textBox3);
+            this.ClientSize = new System.Drawing.Size(603, 458);
+            this.Controls.Add(this.lbl_ExcluirMateria);
+            this.Controls.Add(this.txt_MateriaExcluir);
+            this.Controls.Add(this.lbl_MateriaExcluir);
+            this.Controls.Add(this.cb_Curso);
+            this.Controls.Add(this.txt_Nome);
             this.Controls.Add(this.lbl_Nome);
             this.Controls.Add(this.btn_Voltar);
             this.Controls.Add(this.btn_Excluir);
             this.Controls.Add(this.btn_Salvar);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.cb_Situacao);
+            this.Controls.Add(this.txt_DataCadastro);
             this.Controls.Add(this.lbl_Situacao);
             this.Controls.Add(this.lbl_DataCadastro);
             this.Controls.Add(this.lbl_Descricao);
@@ -184,13 +221,16 @@
         private System.Windows.Forms.Label lbl_Descricao;
         private System.Windows.Forms.Label lbl_DataCadastro;
         private System.Windows.Forms.Label lbl_Situacao;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TextBox txt_DataCadastro;
+        private System.Windows.Forms.ComboBox cb_Situacao;
         private System.Windows.Forms.Button btn_Salvar;
         private System.Windows.Forms.Button btn_Excluir;
         private System.Windows.Forms.Button btn_Voltar;
         private System.Windows.Forms.Label lbl_Nome;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox txt_Nome;
+        private System.Windows.Forms.ComboBox cb_Curso;
+        private System.Windows.Forms.Label lbl_MateriaExcluir;
+        private System.Windows.Forms.TextBox txt_MateriaExcluir;
+        private System.Windows.Forms.Label lbl_ExcluirMateria;
     }
 }

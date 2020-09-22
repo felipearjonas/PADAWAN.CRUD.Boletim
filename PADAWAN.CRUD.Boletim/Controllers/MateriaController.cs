@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PADAWAN.CRUD.Context;
 using PADAWAN.CRUD.Models;
 using PADAWAN.CRUD.Models.Util;
 using System;
@@ -12,21 +13,20 @@ namespace PADAWAN.CRUD.Boletim.Controllers
     [Route("CadastroMateria")]
     public class MateriaController : ControllerBase
     {
-        public static List<Materia> listamaterias = new List<Materia>();
+        BoletimContext Meubanquinho = new BoletimContext();
         [HttpGet]
         [Route("MostraMaterias")]
         public ActionResult Get()
         {
-            List<string> lista = new List<string>();
-            listamaterias.ForEach(s => lista.Add(s.NomeMateria));
-            return Ok(lista);
+            return Ok(Meubanquinho.Materias.ToList());
         }
 
         [HttpPost]
-        [Route("Materias")]
+        [Route("AddMaterias")]
         public ActionResult Post(Materia materia)
         {
-            listamaterias.Add(materia);
+            Meubanquinho.Materias.Add(materia);
+            Meubanquinho.SaveChanges();
             return Ok(Resultado.Sucess);
         }
 
@@ -34,13 +34,13 @@ namespace PADAWAN.CRUD.Boletim.Controllers
         [Route("FiltrarMaterias")]
         public ActionResult Filtro(string nome)
         {
-            var resultado = listamaterias.Where(q => q.NomeMateria.Contains(nome)).ToList();
+            var resultado = Meubanquinho.Materias.Where(q => q.NomeMateria.Contains(nome)).ToList();
 
             if (resultado.Count() == 0)
             {
                 return BadRequest(Resultado.NoSucess);
             }
-            return Ok(listamaterias);
+            return Ok(Meubanquinho.Materias.ToList());
         }
 
         [HttpPut]
@@ -48,7 +48,7 @@ namespace PADAWAN.CRUD.Boletim.Controllers
         public ActionResult Atualizar(int id, string novonome)
         {
 
-            var resultado = listamaterias.Where(q => q.IdMateria == id).ToList().FirstOrDefault();
+            var resultado = Meubanquinho.Materias.Where(q => q.IdMateria == id).ToList().FirstOrDefault();
             if (resultado is null)
             {
                 return BadRequest(Resultado.NoSucess);
@@ -60,15 +60,16 @@ namespace PADAWAN.CRUD.Boletim.Controllers
 
         [HttpDelete]
         [Route("DeletarMaterias")]
-        public ActionResult Deletar(int id)
+        public ActionResult Deletar(string nome)
         {
 
-            var resultado = listamaterias.Where(q => q.IdMateria == id).FirstOrDefault();
+            var resultado = Meubanquinho.Materias.Where(q => q.NomeMateria == nome).FirstOrDefault();
             if (resultado is null)
             {
                 return BadRequest(Resultado.NoSucess);
             }
-            listamaterias.Remove(resultado);
+            Meubanquinho.Materias.Remove(resultado);
+            Meubanquinho.SaveChanges();
             return Ok(Resultado.Sucess);
 
         }

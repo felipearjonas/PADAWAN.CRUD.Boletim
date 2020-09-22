@@ -12,46 +12,31 @@ using System.Windows.Forms;
 
 namespace PADAWAN.CRUD.View
 {
-    public partial class CadastroNota : Form
+    public partial class AlterarExcluirNota : Form
     {
-        public CadastroNota()
+        public AlterarExcluirNota()
         {
             InitializeComponent();
             CarregarAluno();
             CarregarMateria();
+            CarregarNota();
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btn_Salvar_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
             int.TryParse((Regex.Match(cb_Aluno.Text, @"\d+").Value), out int aluno);
-            int.TryParse((Regex.Match(cb_Materia.Text, @"\d+").Value), out int materia);
-            var nota = new Models.Nota();
-            {
-
-                nota.IdAluno = aluno;
-                nota.IdMateria = materia;
-                nota.NotaAluno = double.Parse(txt_Nota.Text);
-
-
-
-            }
-
-            var content = JsonConvert.SerializeObject(nota);
-            var URL = "http://localhost:60096/CadastroNotas/AddNotas";
+            var URL = "http://localhost:60096/CadastroNotas/DeletarNotas";
 
             var httpClient = new HttpClient();
-            var resultRequest = httpClient.PostAsync(URL, new StringContent(content, Encoding.UTF8, "application/json"));
+            var resultRequest = httpClient.DeleteAsync($"{URL}?idAluno={aluno}");
             resultRequest.Wait();
 
             var result = resultRequest.Result.Content.ReadAsStringAsync();
             result.Wait();
 
-            MessageBox.Show("Cadastrado com Sucesso");
+
+
+            MessageBox.Show("Excluido com Sucesso");
         }
         private void CarregarAluno()
         {
@@ -89,25 +74,37 @@ namespace PADAWAN.CRUD.View
 
         }
 
+        private void CarregarNota()
+        {
+            var httpClient = new HttpClient();
+            var URL = "http://localhost:60096/CadastroNotas/MostraNotas";
+            var resultRequest = httpClient.GetAsync(URL);
+            resultRequest.Wait();
+
+            var result = resultRequest.Result.Content.ReadAsStringAsync();
+            result.Wait();
+
+            var data = JsonConvert.DeserializeObject<List<Nota>>(result.Result);
+
+            foreach (var nota in data)
+            {
+                cb_Nota.Items.Add($"{nota.NotaAluno}");
+            }
+
+        }
+
         private class Root
         {
             public List<Aluno> Data { get; set; }
             public List<Materia> DataMateria { get; set; }
+            public List<Nota> DataNota { get; set; }
         }
 
-        private void btn_Voltar_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            var menu = new MenuAdministrador();
+            var menu = new CadastroNota();
             this.Hide();
             menu.Show();
-        }
-
-        private void btn_Excluir_Click(object sender, EventArgs e)
-        {
-            var menu = new AlterarExcluirNota();
-            this.Hide();
-            menu.Show();
-
         }
     }
 }

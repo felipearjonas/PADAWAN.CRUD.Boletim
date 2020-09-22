@@ -13,7 +13,7 @@ namespace PADAWAN.CRUD.View
 {
     public partial class CadastroCurso : Form
     {
-        public static List<Models.Curso> listagem = new List<Models.Curso>();
+       
         public CadastroCurso()
         {
             InitializeComponent();

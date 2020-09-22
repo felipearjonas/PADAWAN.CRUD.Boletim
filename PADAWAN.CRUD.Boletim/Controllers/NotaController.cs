@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PADAWAN.CRUD.Context;
 using PADAWAN.CRUD.Models;
 using PADAWAN.CRUD.Models.Util;
 using System;
@@ -14,42 +15,56 @@ namespace PADAWAN.CRUD.Boletim.Controllers
     public class NotasController : ControllerBase
     {
 
-        public static List<Nota> listaNotas = new List<Nota>();
+        BoletimContext Meubanquinho = new BoletimContext();
         [HttpGet]
         [Route("MostraNotas")]
         public ActionResult Get()
         {
-
-            return Ok(listaNotas);
+            var auxiliar =  new List<Auxiliar>();
+            var listas = (from Nota in Meubanquinho.Notas
+                          join Materia in Meubanquinho.Materias on Nota.IdMateria equals Materia.IdMateria
+                          select new { Nota.IdAluno, Nota.NotaAluno, Materia.NomeMateria }).ToList();
+            foreach (var item in listas)
+            {
+                var aux = new Auxiliar()
+                {
+                    IdAluno = item.IdAluno,
+                    NomeMateria = item.NomeMateria,
+                    NotaAluno = item.NotaAluno
+                };
+                auxiliar.Add(aux);
+            }
+            return Ok(auxiliar);
         }
 
         [HttpPost]
-        [Route("Notas")]
+        [Route("AddNotas")]
         public ActionResult Post(Nota notas)
         {
-            listaNotas.Add(notas);
-            return Ok(listaNotas);
+            Meubanquinho.Notas.Add(notas);
+            Meubanquinho.SaveChanges();
+            return Ok(Resultado.Sucess);
         }
 
         [HttpGet]
         [Route("FiltrarNotas")]
         public ActionResult Filtro(string nome)
         {
-            var resultado = listaNotas.Where(q => q.Aluno.Nome.Contains(nome)).ToList();
+            var resultado = Meubanquinho.Notas.Where(q => q.Aluno.Nome.Contains(nome)).ToList();
 
             if (resultado.Count() == 0)
             {
                 return BadRequest(Resultado.NoSucess);
             }
-            return Ok(listaNotas);
+            return Ok(Meubanquinho.Notas.ToList());
         }
 
         [HttpPut]
-        [Route("PessoaNotas")]
+        [Route("AtualizarNotas")]
         public ActionResult Atualizar(int id, int nota)
         {
 
-            var resultado = listaNotas.Where(q => q.NotaAluno == nota).ToList().FirstOrDefault();
+            var resultado = Meubanquinho.Notas.Where(q => q.NotaAluno == nota).ToList().FirstOrDefault();
             if (resultado is null)
             {
                 return BadRequest(Resultado.NoSucess);
@@ -61,16 +76,23 @@ namespace PADAWAN.CRUD.Boletim.Controllers
 
         [HttpDelete]
         [Route("DeletarNotas")]
-        public ActionResult Deletar(int nota)
+        public ActionResult Deletar(int idAluno)
         {
 
-            var resultado = listaNotas.Where(q => q.NotaAluno == nota).FirstOrDefault();
+            var resultado = Meubanquinho.Notas.Where(q => q.IdAluno == idAluno).FirstOrDefault();
             if (resultado is null)
             {
                 return BadRequest(Resultado.NoSucess);
             }
-            listaNotas.Remove(resultado);
+            Meubanquinho.Notas.Remove(resultado);
+            Meubanquinho.SaveChanges();
             return Ok(Resultado.Sucess);
         }
+    }
+    public class Auxiliar
+    {
+        public int IdAluno { get; set; }
+        public string NomeMateria { get; set; }
+        public double NotaAluno { get; set; }
     }
 }

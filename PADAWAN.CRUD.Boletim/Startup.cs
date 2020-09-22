@@ -30,7 +30,7 @@ namespace PADAWAN.CRUD.Boletim
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BoletimContext>(op => op.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddMvc().AddNewtonsoftJson(q => q.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+           
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

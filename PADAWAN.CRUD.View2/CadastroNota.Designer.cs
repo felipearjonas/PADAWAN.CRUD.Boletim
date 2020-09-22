@@ -32,12 +32,12 @@
             this.lbl_Aluno = new System.Windows.Forms.Label();
             this.lbl_Materia = new System.Windows.Forms.Label();
             this.lbl_Nota = new System.Windows.Forms.Label();
-            this.txt_Aluno = new System.Windows.Forms.TextBox();
-            this.txt_Materia = new System.Windows.Forms.TextBox();
             this.txt_Nota = new System.Windows.Forms.TextBox();
             this.btn_Salvar = new System.Windows.Forms.Button();
             this.btn_Excluir = new System.Windows.Forms.Button();
             this.btn_Voltar = new System.Windows.Forms.Button();
+            this.cb_Aluno = new System.Windows.Forms.ComboBox();
+            this.cb_Materia = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lbl_CadastroNota
@@ -81,21 +81,6 @@
             this.lbl_Nota.TabIndex = 3;
             this.lbl_Nota.Text = "Nota:";
             // 
-            // txt_Aluno
-            // 
-            this.txt_Aluno.Location = new System.Drawing.Point(171, 140);
-            this.txt_Aluno.Name = "txt_Aluno";
-            this.txt_Aluno.Size = new System.Drawing.Size(305, 23);
-            this.txt_Aluno.TabIndex = 4;
-            // 
-            // txt_Materia
-            // 
-            this.txt_Materia.Location = new System.Drawing.Point(171, 181);
-            this.txt_Materia.Name = "txt_Materia";
-            this.txt_Materia.Size = new System.Drawing.Size(189, 23);
-            this.txt_Materia.TabIndex = 5;
-            this.txt_Materia.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            // 
             // txt_Nota
             // 
             this.txt_Nota.Location = new System.Drawing.Point(171, 220);
@@ -107,40 +92,59 @@
             // 
             this.btn_Salvar.Location = new System.Drawing.Point(171, 285);
             this.btn_Salvar.Name = "btn_Salvar";
-            this.btn_Salvar.Size = new System.Drawing.Size(75, 23);
+            this.btn_Salvar.Size = new System.Drawing.Size(85, 23);
             this.btn_Salvar.TabIndex = 7;
             this.btn_Salvar.Text = "Salvar";
             this.btn_Salvar.UseVisualStyleBackColor = true;
+            this.btn_Salvar.Click += new System.EventHandler(this.btn_Salvar_Click);
             // 
             // btn_Excluir
             // 
             this.btn_Excluir.Location = new System.Drawing.Point(285, 285);
             this.btn_Excluir.Name = "btn_Excluir";
-            this.btn_Excluir.Size = new System.Drawing.Size(75, 23);
+            this.btn_Excluir.Size = new System.Drawing.Size(94, 23);
             this.btn_Excluir.TabIndex = 8;
-            this.btn_Excluir.Text = "Excluir";
+            this.btn_Excluir.Text = "Alterar/Excluir";
             this.btn_Excluir.UseVisualStyleBackColor = true;
+            this.btn_Excluir.Click += new System.EventHandler(this.btn_Excluir_Click);
             // 
             // btn_Voltar
             // 
             this.btn_Voltar.Location = new System.Drawing.Point(401, 285);
             this.btn_Voltar.Name = "btn_Voltar";
-            this.btn_Voltar.Size = new System.Drawing.Size(75, 23);
+            this.btn_Voltar.Size = new System.Drawing.Size(83, 23);
             this.btn_Voltar.TabIndex = 9;
             this.btn_Voltar.Text = "Voltar";
             this.btn_Voltar.UseVisualStyleBackColor = true;
+            this.btn_Voltar.Click += new System.EventHandler(this.btn_Voltar_Click);
+            // 
+            // cb_Aluno
+            // 
+            this.cb_Aluno.FormattingEnabled = true;
+            this.cb_Aluno.Location = new System.Drawing.Point(171, 140);
+            this.cb_Aluno.Name = "cb_Aluno";
+            this.cb_Aluno.Size = new System.Drawing.Size(260, 23);
+            this.cb_Aluno.TabIndex = 10;
+            // 
+            // cb_Materia
+            // 
+            this.cb_Materia.FormattingEnabled = true;
+            this.cb_Materia.Location = new System.Drawing.Point(171, 181);
+            this.cb_Materia.Name = "cb_Materia";
+            this.cb_Materia.Size = new System.Drawing.Size(260, 23);
+            this.cb_Materia.TabIndex = 10;
             // 
             // CadastroNota
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(581, 384);
+            this.Controls.Add(this.cb_Materia);
+            this.Controls.Add(this.cb_Aluno);
             this.Controls.Add(this.btn_Voltar);
             this.Controls.Add(this.btn_Excluir);
             this.Controls.Add(this.btn_Salvar);
             this.Controls.Add(this.txt_Nota);
-            this.Controls.Add(this.txt_Materia);
-            this.Controls.Add(this.txt_Aluno);
             this.Controls.Add(this.lbl_Nota);
             this.Controls.Add(this.lbl_Materia);
             this.Controls.Add(this.lbl_Aluno);
@@ -158,11 +162,11 @@
         private System.Windows.Forms.Label lbl_Aluno;
         private System.Windows.Forms.Label lbl_Materia;
         private System.Windows.Forms.Label lbl_Nota;
-        private System.Windows.Forms.TextBox txt_Aluno;
-        private System.Windows.Forms.TextBox txt_Materia;
         private System.Windows.Forms.TextBox txt_Nota;
         private System.Windows.Forms.Button btn_Salvar;
         private System.Windows.Forms.Button btn_Excluir;
         private System.Windows.Forms.Button btn_Voltar;
+        private System.Windows.Forms.ComboBox cb_Aluno;
+        private System.Windows.Forms.ComboBox cb_Materia;
     }
 }
