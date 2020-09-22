@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace PADAWAN.CRUD.View
@@ -38,6 +39,7 @@ namespace PADAWAN.CRUD.View
 
         private void btn_Salvar_Click(object sender, EventArgs e)
         {
+            int.TryParse((Regex.Match(cb_Curso.Text, @"\d+").Value), out int curso);
             var aluno = new Models.Aluno();
             {
 
@@ -45,7 +47,7 @@ namespace PADAWAN.CRUD.View
                 aluno.Sobrenome = txt_Sobrenome.Text;
                 aluno.DataNascimento = DateTime.Parse(txt_Datanasc.Text);
                 aluno.Cpf = txt_Cpf.Text;
-                aluno.IdCurso = int.Parse(cb_Curso.Text);
+                aluno.IdCurso = curso;
 
             }
 
@@ -73,18 +75,18 @@ namespace PADAWAN.CRUD.View
         private void CarregarCurso()
         {
             var httpClient = new HttpClient();
-            var URL = "http://localhost:60096/Cadastro/MostraAlunos";
+            var URL = "http://localhost:60096/CadastroCurso/MostrarCurso";
             var resultRequest = httpClient.GetAsync(URL);
             resultRequest.Wait();
 
             var result = resultRequest.Result.Content.ReadAsStringAsync();
             result.Wait();
 
-            var data = JsonConvert.DeserializeObject<Root>(result.Result).Data;
+            var data = JsonConvert.DeserializeObject<List<Curso>>(result.Result);
 
             foreach (var curso in data)
             {
-                cb_Curso.Items.Add(curso.NomeCurso);
+                cb_Curso.Items.Add($"{curso.IdCurso} - {curso.NomeCurso}");
             }
         }
 
@@ -103,7 +105,7 @@ namespace PADAWAN.CRUD.View
             var URL = "http://localhost:60096/Cadastro/DeletarAluno";
 
             var httpClient = new HttpClient();
-            var resultRequest = httpClient.DeleteAsync($"{URL}?nome={txt_CpfExcluir.Text}");
+            var resultRequest = httpClient.DeleteAsync($"{URL}?cpf={txt_CpfExcluir.Text}");
             resultRequest.Wait();
 
             var result = resultRequest.Result.Content.ReadAsStringAsync();
@@ -112,6 +114,7 @@ namespace PADAWAN.CRUD.View
 
 
             MessageBox.Show("Excluido com Sucesso");
+
             txt_CpfExcluir.Text = "";
         }
     }

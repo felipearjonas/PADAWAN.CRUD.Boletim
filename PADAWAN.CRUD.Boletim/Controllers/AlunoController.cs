@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PADAWAN.CRUD.Models;
 using PADAWAN.CRUD.Models.Util;
+using PADAWAN.CRUD.Context;
 
 namespace PADAWAN.CRUD.Boletim.Controllers
 {
@@ -13,19 +14,20 @@ namespace PADAWAN.CRUD.Boletim.Controllers
     [Route("Cadastro")]
     public class AlunoController : ControllerBase
     {
-        public static List<Aluno> listaalunos = new List<Aluno>();
+        BoletimContext Meubanquinho = new BoletimContext();
         [HttpGet]
         [Route("MostraAlunos")]
         public ActionResult Get()
         {
-            return Ok(listaalunos);
+            return Ok(Meubanquinho.Alunos.ToList());
         }
 
         [HttpPost]
         [Route("AddAlunos")]
         public ActionResult Post(Aluno aluno)
         {
-            listaalunos.Add(aluno);
+            Meubanquinho.Alunos.Add(aluno);
+            Meubanquinho.SaveChanges();
             return Ok(Resultado.Sucess);
         }
 
@@ -33,13 +35,13 @@ namespace PADAWAN.CRUD.Boletim.Controllers
         [Route("FiltrarAlunos")]
         public ActionResult Filtro(string nome)
         {
-            var resultado = listaalunos.Where(q => q.Nome.Contains(nome)).ToList();
+            var resultado = Meubanquinho.Alunos.Where(q => q.Nome.Contains(nome)).ToList();
 
             if (resultado.Count() == 0)
             {
                 return BadRequest(Resultado.NoSucess);
             }
-            return Ok(listaalunos);
+            return Ok(Meubanquinho.Alunos.ToList());
         }
 
         [HttpPut]
@@ -47,7 +49,7 @@ namespace PADAWAN.CRUD.Boletim.Controllers
         public ActionResult Atualizar(int id, string novonome)
         {
 
-            var resultado = listaalunos.Where(q => q.IdAluno == id).ToList().FirstOrDefault();
+            var resultado = Meubanquinho.Alunos.Where(q => q.IdAluno == id).ToList().FirstOrDefault();
             if (resultado is null)
             {
                 return BadRequest(Resultado.NoSucess);
@@ -59,15 +61,16 @@ namespace PADAWAN.CRUD.Boletim.Controllers
 
         [HttpDelete]
         [Route("DeletarAluno")]
-        public ActionResult Deletar(int id)
+        public ActionResult Deletar(string cpf)
         {
 
-            var resultado = listaalunos.Where(q => q.IdAluno == id).FirstOrDefault();
+            var resultado = Meubanquinho.Alunos.Where(q => q.Cpf == cpf).FirstOrDefault();
             if (resultado is null)
             {
                 return BadRequest(Resultado.NoSucess);
             }
-            listaalunos.Remove(resultado);
+            Meubanquinho.Alunos.Remove(resultado);
+            Meubanquinho.SaveChanges();
             return Ok(Resultado.Sucess);
 
         }
