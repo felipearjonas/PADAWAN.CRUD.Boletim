@@ -19,7 +19,7 @@ namespace PADAWAN.CRUD.View
             InitializeComponent();
             CarregarAluno();
             CarregarMateria();
-            CarregarNota();
+           // CarregarNota();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -74,30 +74,30 @@ namespace PADAWAN.CRUD.View
 
         }
 
-        private void CarregarNota()
-        {
-            var httpClient = new HttpClient();
-            var URL = "http://localhost:60096/CadastroNotas/MostraNotas";
-            var resultRequest = httpClient.GetAsync(URL);
-            resultRequest.Wait();
+        //private void CarregarNota()
+        //{
+        //    var httpClient = new HttpClient();
+        //    var URL = "http://localhost:60096/CadastroNotas/MostraNotas";
+        //    var resultRequest = httpClient.GetAsync(URL);
+        //    resultRequest.Wait();
 
-            var result = resultRequest.Result.Content.ReadAsStringAsync();
-            result.Wait();
+        //    var result = resultRequest.Result.Content.ReadAsStringAsync();
+        //    result.Wait();
 
-            var data = JsonConvert.DeserializeObject<List<Nota>>(result.Result);
+        //    var data = JsonConvert.DeserializeObject<List<Nota>>(result.Result);
 
-            foreach (var nota in data)
-            {
-                cb_Nota.Items.Add($"{nota.NotaAluno}");
-            }
+        //    foreach (var nota in data)
+        //    {
+        //        cb_Nota.Items.Add($"{nota.NotaAluno}");
+        //    }
 
-        }
+        //}
 
         private class Root
         {
             public List<Aluno> Data { get; set; }
             public List<Materia> DataMateria { get; set; }
-            public List<Nota> DataNota { get; set; }
+          //  public List<Nota> DataNota { get; set; }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -105,6 +105,29 @@ namespace PADAWAN.CRUD.View
             var menu = new CadastroNota();
             this.Hide();
             menu.Show();
+        }
+
+        private void btn_Alterar_Click(object sender, EventArgs e)
+        {
+            int.TryParse((Regex.Match(cb_Aluno.Text, @"\d+").Value), out int aluno);
+            int.TryParse((Regex.Match(cb_Materia.Text, @"\d+").Value), out int materia);
+
+            double.TryParse(txt_Nota.Text, out double novanota);
+            var URL = "http://localhost:60096/CadastroNotas/AtualizarNotas";
+
+            var httpClient = new HttpClient();
+            var resultRequest = httpClient.PutAsync($"{URL}?idAluno={aluno}&idMateria={materia}&nota={novanota}", null);
+
+            resultRequest.Wait();
+
+            var result = resultRequest.Result.Content.ReadAsStringAsync();
+            result.Wait();
+
+            MessageBox.Show("Alterado com Sucesso");
+
+            cb_Aluno.Text = "";
+            cb_Materia.Text = "";
+            txt_Nota.Text = "";
         }
     }
 }

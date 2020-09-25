@@ -37,7 +37,7 @@
             this.lbl_Materia = new System.Windows.Forms.Label();
             this.lbl_Aluno = new System.Windows.Forms.Label();
             this.lbl_AlterarExlcuir = new System.Windows.Forms.Label();
-            this.cb_Nota = new System.Windows.Forms.ComboBox();
+            this.txt_Nota = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // cb_Materia
@@ -84,6 +84,7 @@
             this.btn_Alterar.TabIndex = 7;
             this.btn_Alterar.Text = "Alterar";
             this.btn_Alterar.UseVisualStyleBackColor = true;
+            this.btn_Alterar.Click += new System.EventHandler(this.btn_Alterar_Click);
             // 
             // lbl_Nota
             // 
@@ -126,20 +127,19 @@
             this.lbl_AlterarExlcuir.TabIndex = 0;
             this.lbl_AlterarExlcuir.Text = "Alterar/Excluir Notas";
             // 
-            // cb_Nota
+            // txt_Nota
             // 
-            this.cb_Nota.FormattingEnabled = true;
-            this.cb_Nota.Location = new System.Drawing.Point(197, 209);
-            this.cb_Nota.Name = "cb_Nota";
-            this.cb_Nota.Size = new System.Drawing.Size(93, 23);
-            this.cb_Nota.TabIndex = 10;
+            this.txt_Nota.Location = new System.Drawing.Point(197, 208);
+            this.txt_Nota.Name = "txt_Nota";
+            this.txt_Nota.Size = new System.Drawing.Size(100, 23);
+            this.txt_Nota.TabIndex = 11;
             // 
             // AlterarExcluirNota
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(593, 390);
-            this.Controls.Add(this.cb_Nota);
+            this.Controls.Add(this.txt_Nota);
             this.Controls.Add(this.lbl_AlterarExlcuir);
             this.Controls.Add(this.lbl_Aluno);
             this.Controls.Add(this.lbl_Materia);
@@ -167,6 +167,6 @@
         private System.Windows.Forms.Label lbl_Materia;
         private System.Windows.Forms.Label lbl_Aluno;
         private System.Windows.Forms.Label lbl_AlterarExlcuir;
-        private System.Windows.Forms.ComboBox cb_Nota;
+        private System.Windows.Forms.TextBox txt_Nota;
     }
 }

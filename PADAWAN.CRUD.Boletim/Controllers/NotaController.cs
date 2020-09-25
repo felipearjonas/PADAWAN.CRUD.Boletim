@@ -5,6 +5,7 @@ using PADAWAN.CRUD.Models.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace PADAWAN.CRUD.Boletim.Controllers
@@ -61,16 +62,20 @@ namespace PADAWAN.CRUD.Boletim.Controllers
 
         [HttpPut]
         [Route("AtualizarNotas")]
-        public ActionResult Atualizar(int id, int nota)
+        public ActionResult Atualizar(int idAluno, int idMateria, double nota)
         {
-
-            var resultado = Meubanquinho.Notas.Where(q => q.NotaAluno == nota).ToList().FirstOrDefault();
-            if (resultado is null)
+            using (Meubanquinho)
             {
+                var resultado = Meubanquinho.Notas.Where(q => q.IdAluno.Equals(idAluno) && q.IdMateria.Equals(idMateria)).FirstOrDefault();
+                if (resultado != null)
+                {
+                    resultado.NotaAluno = nota;
+                    Meubanquinho.SaveChanges();
+                    return Ok(Resultado.Sucess);
+                    
+                }
                 return BadRequest(Resultado.NoSucess);
             }
-            resultado.NotaAluno = nota;
-            return Ok(Resultado.Sucess);
 
         }
 
@@ -87,6 +92,8 @@ namespace PADAWAN.CRUD.Boletim.Controllers
             Meubanquinho.Notas.Remove(resultado);
             Meubanquinho.SaveChanges();
             return Ok(Resultado.Sucess);
+
+            
         }
     }
     public class Auxiliar
