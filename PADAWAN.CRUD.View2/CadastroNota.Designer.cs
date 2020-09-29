@@ -45,11 +45,11 @@
             this.lbl_CadastroNota.AutoSize = true;
             this.lbl_CadastroNota.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lbl_CadastroNota.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_CadastroNota.Location = new System.Drawing.Point(171, 50);
+            this.lbl_CadastroNota.Location = new System.Drawing.Point(204, 41);
             this.lbl_CadastroNota.Name = "lbl_CadastroNota";
-            this.lbl_CadastroNota.Size = new System.Drawing.Size(208, 25);
+            this.lbl_CadastroNota.Size = new System.Drawing.Size(184, 25);
             this.lbl_CadastroNota.TabIndex = 0;
-            this.lbl_CadastroNota.Text = "Cadastro de Notas";
+            this.lbl_CadastroNota.Text = "Matricular Aluno";
             // 
             // lbl_Aluno
             // 
@@ -94,7 +94,7 @@
             this.btn_Salvar.Name = "btn_Salvar";
             this.btn_Salvar.Size = new System.Drawing.Size(85, 23);
             this.btn_Salvar.TabIndex = 7;
-            this.btn_Salvar.Text = "Salvar";
+            this.btn_Salvar.Text = "Matricular";
             this.btn_Salvar.UseVisualStyleBackColor = true;
             this.btn_Salvar.Click += new System.EventHandler(this.btn_Salvar_Click);
             // 
@@ -125,6 +125,7 @@
             this.cb_Aluno.Name = "cb_Aluno";
             this.cb_Aluno.Size = new System.Drawing.Size(260, 23);
             this.cb_Aluno.TabIndex = 10;
+            this.cb_Aluno.SelectedIndexChanged += new System.EventHandler(this.cb_Aluno_SelectedIndexChanged);
             // 
             // cb_Materia
             // 

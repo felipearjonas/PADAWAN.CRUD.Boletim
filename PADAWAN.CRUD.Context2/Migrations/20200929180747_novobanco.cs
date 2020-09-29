@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PADAWAN.CRUD.Context.Migrations
 {
-    public partial class initialcreate : Migration
+    public partial class novobanco : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,12 +80,12 @@ namespace PADAWAN.CRUD.Context.Migrations
                 name: "CursoMateria",
                 columns: table => new
                 {
-                    IdMateria = table.Column<int>(nullable: false),
-                    IdCurso = table.Column<int>(nullable: false)
+                    IdCurso = table.Column<int>(nullable: false),
+                    IdMateria = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CursoMateria", x => x.IdMateria);
+                    table.PrimaryKey("PK_CursoMateria", x => new { x.IdCurso, x.IdMateria });
                     table.ForeignKey(
                         name: "FK_CursoMateria_Cursos_IdCurso",
                         column: x => x.IdCurso,
@@ -104,13 +104,13 @@ namespace PADAWAN.CRUD.Context.Migrations
                 name: "Notas",
                 columns: table => new
                 {
-                    IdMateria = table.Column<int>(nullable: false),
                     IdAluno = table.Column<int>(nullable: false),
+                    IdMateria = table.Column<int>(nullable: false),
                     NotaAluno = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notas", x => x.IdMateria);
+                    table.PrimaryKey("PK_Notas", x => new { x.IdAluno, x.IdMateria });
                     table.ForeignKey(
                         name: "FK_Notas_Alunos_IdAluno",
                         column: x => x.IdAluno,
@@ -131,14 +131,14 @@ namespace PADAWAN.CRUD.Context.Migrations
                 column: "CursosIdCurso");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CursoMateria_IdCurso",
+                name: "IX_CursoMateria_IdMateria",
                 table: "CursoMateria",
-                column: "IdCurso");
+                column: "IdMateria");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notas_IdAluno",
+                name: "IX_Notas_IdMateria",
                 table: "Notas",
-                column: "IdAluno");
+                column: "IdMateria");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

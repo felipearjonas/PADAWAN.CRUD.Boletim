@@ -30,22 +30,14 @@ namespace PADAWAN.CRUD.View
         {
             int.TryParse((Regex.Match(cb_Aluno.Text, @"\d+").Value), out int aluno);
             int.TryParse((Regex.Match(cb_Materia.Text, @"\d+").Value), out int materia);
-            var nota = new Models.Nota();
-            {
 
-                nota.IdAluno = aluno;
-                nota.IdMateria = materia;
-                nota.NotaAluno = double.Parse(txt_Nota.Text);
+            //(int, int) content = (aluno, materia);
 
-
-
-            }
-
-            var content = JsonConvert.SerializeObject(nota);
-            var URL = "http://localhost:60096/CadastroNotas/AddNotas";
+          
+            var URL = $"http://localhost:60096/CadastroNotas/MatricularAluno?idAluno={aluno}&idMateria={materia}";
 
             var httpClient = new HttpClient();
-            var resultRequest = httpClient.PostAsync(URL, new StringContent(content, Encoding.UTF8, "application/json"));
+            var resultRequest = httpClient.GetAsync(URL);
             resultRequest.Wait();
 
             var result = resultRequest.Result.Content.ReadAsStringAsync();
@@ -107,6 +99,11 @@ namespace PADAWAN.CRUD.View
             var menu = new AlterarExcluirNota();
             this.Hide();
             menu.Show();
+
+        }
+
+        private void cb_Aluno_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

@@ -7,9 +7,9 @@ using PADAWAN.CRUD.Models;
 
 namespace PADAWAN.CRUD.Context.Types
 {
-    class NotaTypeConfiguration : IEntityTypeConfiguration<Nota>
+    class NotaTypeConfiguration : IEntityTypeConfiguration<AlunoMateria>
     {
-        public void Configure(EntityTypeBuilder<Nota> builder)
+        public void Configure(EntityTypeBuilder<AlunoMateria> builder)
         {
             builder.HasKey(q => q.IdAluno);
             builder.HasKey(q => q.IdMateria);

@@ -10,8 +10,8 @@ using PADAWAN.CRUD.Context;
 namespace PADAWAN.CRUD.Context.Migrations
 {
     [DbContext(typeof(BoletimContext))]
-    [Migration("20200921231115_initialcreate")]
-    partial class initialcreate
+    [Migration("20200929180747_novobanco")]
+    partial class novobanco
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,6 +59,24 @@ namespace PADAWAN.CRUD.Context.Migrations
                     b.ToTable("Alunos");
                 });
 
+            modelBuilder.Entity("PADAWAN.CRUD.Models.AlunoMateria", b =>
+                {
+                    b.Property<int>("IdAluno")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdMateria")
+                        .HasColumnType("int");
+
+                    b.Property<double>("NotaAluno")
+                        .HasColumnType("float");
+
+                    b.HasKey("IdAluno", "IdMateria");
+
+                    b.HasIndex("IdMateria");
+
+                    b.ToTable("Notas");
+                });
+
             modelBuilder.Entity("PADAWAN.CRUD.Models.Curso", b =>
                 {
                     b.Property<int>("IdCurso")
@@ -83,15 +101,15 @@ namespace PADAWAN.CRUD.Context.Migrations
 
             modelBuilder.Entity("PADAWAN.CRUD.Models.CursoMateria", b =>
                 {
-                    b.Property<int>("IdMateria")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdCurso")
                         .HasColumnType("int");
 
-                    b.HasKey("IdMateria");
+                    b.Property<int>("IdMateria")
+                        .HasColumnType("int");
 
-                    b.HasIndex("IdCurso");
+                    b.HasKey("IdCurso", "IdMateria");
+
+                    b.HasIndex("IdMateria");
 
                     b.ToTable("CursoMateria");
                 });
@@ -124,24 +142,6 @@ namespace PADAWAN.CRUD.Context.Migrations
                     b.ToTable("Materias");
                 });
 
-            modelBuilder.Entity("PADAWAN.CRUD.Models.Nota", b =>
-                {
-                    b.Property<int>("IdMateria")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdAluno")
-                        .HasColumnType("int");
-
-                    b.Property<double>("NotaAluno")
-                        .HasColumnType("float");
-
-                    b.HasKey("IdMateria");
-
-                    b.HasIndex("IdAluno");
-
-                    b.ToTable("Notas");
-                });
-
             modelBuilder.Entity("PADAWAN.CRUD.Models.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -171,6 +171,21 @@ namespace PADAWAN.CRUD.Context.Migrations
                         .HasForeignKey("CursosIdCurso");
                 });
 
+            modelBuilder.Entity("PADAWAN.CRUD.Models.AlunoMateria", b =>
+                {
+                    b.HasOne("PADAWAN.CRUD.Models.Aluno", "Aluno")
+                        .WithMany("Notas")
+                        .HasForeignKey("IdAluno")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PADAWAN.CRUD.Models.Materia", "Materia")
+                        .WithMany("Notas")
+                        .HasForeignKey("IdMateria")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PADAWAN.CRUD.Models.CursoMateria", b =>
                 {
                     b.HasOne("PADAWAN.CRUD.Models.Curso", "Cursos")
@@ -181,21 +196,6 @@ namespace PADAWAN.CRUD.Context.Migrations
 
                     b.HasOne("PADAWAN.CRUD.Models.Materia", "Materia")
                         .WithMany("CursoMateria")
-                        .HasForeignKey("IdMateria")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("PADAWAN.CRUD.Models.Nota", b =>
-                {
-                    b.HasOne("PADAWAN.CRUD.Models.Aluno", "Aluno")
-                        .WithMany("Notas")
-                        .HasForeignKey("IdAluno")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PADAWAN.CRUD.Models.Materia", "Materia")
-                        .WithMany("Notas")
                         .HasForeignKey("IdMateria")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

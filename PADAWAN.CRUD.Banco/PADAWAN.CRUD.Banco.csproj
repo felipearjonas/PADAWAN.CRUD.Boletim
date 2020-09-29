@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PADAWAN.CRUD.Context2\PADAWAN.CRUD.Context.csproj" />
-    <ProjectReference Include="..\PADAWAN.CRUD.Models\PADAWAN.CRUD.Models.csproj" />
   </ItemGroup>
 
 </Project>

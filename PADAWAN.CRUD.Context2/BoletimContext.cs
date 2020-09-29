@@ -19,7 +19,7 @@ namespace PADAWAN.CRUD.Context
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Materia> Materias { get; set; }
-        public DbSet<Nota> Notas { get; set; }
+        public DbSet<AlunoMateria> Notas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { 
@@ -31,11 +31,8 @@ namespace PADAWAN.CRUD.Context
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BoletimContext).Assembly);
 
 
-            modelBuilder.Entity<CursoMateria>().HasOne(q => q.Materia).WithMany(q => q.CursoMateria).HasForeignKey(q => q.IdMateria);
-            modelBuilder.Entity<CursoMateria>().HasOne(q => q.Cursos).WithMany(q => q.CursoMateria).HasForeignKey(q => q.IdCurso);
-            modelBuilder.Entity<Nota>().HasOne(q => q.Materia).WithMany(q => q.Notas).HasForeignKey(q => q.IdMateria);
-            modelBuilder.Entity<Nota>().HasOne(q => q.Aluno).WithMany(q => q.Notas).HasForeignKey(q => q.IdAluno);
-
+            modelBuilder.Entity<CursoMateria>().HasKey(sc => new { sc.IdCurso, sc.IdMateria });
+            modelBuilder.Entity<AlunoMateria>().HasKey(sc => new { sc.IdAluno, sc.IdMateria });
         }
     }
 }

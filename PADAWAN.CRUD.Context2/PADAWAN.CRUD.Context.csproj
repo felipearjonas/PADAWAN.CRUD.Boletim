@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PADAWAN.CRUD.Models\PADAWAN.CRUD.Models.csproj" />
+    <ProjectReference Include="..\PADAWAN.CRUD.Models3\PADAWAN.CRUD.Models.csproj" />
   </ItemGroup>
 
 </Project>

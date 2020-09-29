@@ -3,25 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
 
 namespace PADAWAN.CRUD.Models
 {
-    public class Materia
+    public class Curso
     {
-        public int IdMateria { get; set; }
-
-        public string NomeMateria { get; set; }
-        public DateTime DataCadastro { get; set; }
         public int IdCurso { get; set; }
-        public string SituacaoMateria { get; set; }
+        public string NomeCurso { get; set; }
+        public string SituacaoCurso { get; set; }
 
-      //[JsonIgnore]
-      [IgnoreDataMember]
-        public virtual ICollection<Nota> Notas { get; set; } = new HashSet<Nota>();
+       
+        public virtual ICollection<Aluno> Alunos { get; set; } = new HashSet<Aluno>();
         public virtual ICollection<CursoMateria> CursoMateria { get; set; } = new HashSet<CursoMateria>();
-
 
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 
@@ -17,9 +18,12 @@ namespace PADAWAN.CRUD.Models
         public int IdCurso { get; set; }
         public string SituacaoMateria { get; set; }
 
-      //[JsonIgnore]
+      [JsonIgnore]
       [IgnoreDataMember]
-        public virtual ICollection<Nota> Notas { get; set; } = new HashSet<Nota>();
+        public virtual ICollection<AlunoMateria> Notas { get; set; } = new HashSet<AlunoMateria>();
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<CursoMateria> CursoMateria { get; set; } = new HashSet<CursoMateria>();
 
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PADAWAN.CRUD.Context;
 using PADAWAN.CRUD.Models;
 using PADAWAN.CRUD.Models.Util;
@@ -38,11 +39,25 @@ namespace PADAWAN.CRUD.Boletim.Controllers
             return Ok(auxiliar);
         }
 
-        [HttpPost]
-        [Route("AddNotas")]
-        public ActionResult Post(Nota notas)
+        [HttpGet]
+        [Route("MatricularAluno")]
+        public ActionResult Get(int idAluno, int idMateria)
         {
-            Meubanquinho.Notas.Add(notas);
+            //var idAluno = valor.Item1;
+            //var idMateria = valor.Item2;
+            var aluno = Meubanquinho.Alunos.Where(q => q.IdAluno == idAluno).FirstOrDefault();
+            var materia = Meubanquinho.Materias.Where(m => m.IdMateria == idMateria).FirstOrDefault();
+            if (aluno == null || materia == null)
+            {
+                return BadRequest(Resultado.NoSucess);
+            }
+            aluno.Notas.Add(new AlunoMateria()
+            {
+                Aluno = aluno,
+                Materia = materia,
+                NotaAluno = 0
+                
+            });
             Meubanquinho.SaveChanges();
             return Ok(Resultado.Sucess);
         }
@@ -66,15 +81,23 @@ namespace PADAWAN.CRUD.Boletim.Controllers
         {
             using (Meubanquinho)
             {
-                var resultado = Meubanquinho.Notas.Where(q => q.IdAluno.Equals(idAluno) && q.IdMateria.Equals(idMateria)).FirstOrDefault();
-                if (resultado != null)
+
+                //var resultado = Meubanquinho.Notas.Where(q => q.IdAluno.Equals(idAluno) && q.IdMateria.Equals(idMateria)).FirstOrDefault();
+                Aluno aluno = Meubanquinho.Alunos.Where(q => q.IdAluno == idAluno).Include(x => x.Notas).ThenInclude(z => z.Materia).FirstOrDefault();
+
+                if (aluno == null)
                 {
-                    resultado.NotaAluno = nota;
-                    Meubanquinho.SaveChanges();
-                    return Ok(Resultado.Sucess);
-                    
+                    return BadRequest(Resultado.NoSucess);
                 }
-                return BadRequest(Resultado.NoSucess);
+                var alunomateria = aluno.Notas.Where(q => q.IdMateria == idMateria).FirstOrDefault();
+
+                if (alunomateria == null)
+                {
+                    return BadRequest(Resultado.NoSucess);
+                }
+                alunomateria.NotaAluno = nota;
+                Meubanquinho.SaveChanges();
+                return Ok(Resultado.Sucess);
             }
 
         }
